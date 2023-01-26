@@ -31,6 +31,16 @@ router.post('/delete', function(req, res, next) {
     })
 });
 
+router.get('/:id', function(req, res, next) {
+  client.connect()
+    .then(mongoClient => {
+      getTweetsCollection(mongoClient).findOne({"_id": new ObjectId(req.params.id)})
+        .then(tweet => {
+          res.send(tweet);
+        })
+    })
+});
+
 router.get('/', function(req, res, next) {
   client.connect()
     .then(mongoClient => {
